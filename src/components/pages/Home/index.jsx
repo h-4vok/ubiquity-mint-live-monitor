@@ -1,4 +1,4 @@
-import { PureComponent } from "react";
+import React, { useState } from "react";
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import AddToQueueIcon from '@mui/icons-material/AddToQueue';
@@ -7,15 +7,19 @@ import Stack from '@mui/material/Stack';
 import { Monitor } from "../../../lib/monitor";
 import './Home.css';
 
-export class Home extends PureComponent {
+const Home = () => {
 
-  async startMonitoring() {
+
+  const [blockNumber, setBlockNumber] = useState(null);
+
+  const startMonitoring = async () => {
     console.log(process.env)
-    const monitor = new Monitor(process.env.REACT_APP_API_KEY, process.env.REACT_APP_BLOCK_NUMBER);
+    const startBlockNumber = blockNumber ? blockNumber : "current"
+    console.log({startBlockNumber})
+    const monitor = new Monitor(process.env.REACT_APP_API_KEY, startBlockNumber);
     await monitor.start();
   }
 
-  render() {
     return (
       <div className="App">
         <header className="App-header">
@@ -33,6 +37,8 @@ export class Home extends PureComponent {
               label="Start with block"
               type="number"
               placeholder="Latest"
+              value={blockNumber}
+              onChange={e => setBlockNumber(e.target.value)}
               InputLabelProps={{
                 shrink: true,
               }}
@@ -40,14 +46,13 @@ export class Home extends PureComponent {
             <Button
               variant="contained"
               endIcon={<AddToQueueIcon />}
-              onClick={() => this.startMonitoring()}>
+              onClick={() => startMonitoring()}>
               GO!
             </Button>
           </Stack>
         </header>
       </div>
     );
-  }
 }
 
 export default Home;
