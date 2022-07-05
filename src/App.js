@@ -6,7 +6,8 @@ import { Monitor } from "./monitor";
 export class App extends PureComponent {
 
   async componentDidMount() {
-    const monitor = new Monitor(process.env.REACT_APP_API_KEY);
+    console.log(process.env)
+    const monitor = new Monitor(process.env.REACT_APP_API_KEY, process.env.REACT_APP_BLOCK_NUMBER);
     await monitor.start();
   }
 
