@@ -1,9 +1,9 @@
 import { PureComponent } from "react";
-import logo from './logo.svg';
-import './App.css';
-import { Monitor } from "./monitor";
+import logo from '../../../logo.svg';
+import './Home.css';
+import { Monitor } from "../../../lib/monitor";
 
-export class App extends PureComponent {
+export class Home extends PureComponent {
 
   async componentDidMount() {
     console.log(process.env)
@@ -33,4 +33,4 @@ export class App extends PureComponent {
   }
 }
 
-export default App;
+export default Home;
