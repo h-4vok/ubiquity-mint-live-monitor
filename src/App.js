@@ -4,9 +4,6 @@ import './App.css';
 import { Monitor } from "./monitor";
 
 export class App extends PureComponent {
-  /*constructor(props) {
-    super(props);
-  }*/
 
   async componentDidMount() {
     const monitor = new Monitor(process.env.REACT_APP_API_KEY);
