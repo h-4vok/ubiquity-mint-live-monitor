@@ -17,11 +17,11 @@ export class Monitor {
       console.log(this.#blockNumber)
       console.log(this.#client)
 
-      await this.getLatestBlock();
+      await this.getBlock();
     }
 
-    async getLatestBlock() {
-      console.log("getLatestBlock")
+    async getBlock() {
+      console.log("getBlock")
 
       try {
         const { data } = await this.#client.blocksApi.getBlock(PROTOCOL.SOLANA, NETWORKS.MAIN_NET, this.#blockNumber)
