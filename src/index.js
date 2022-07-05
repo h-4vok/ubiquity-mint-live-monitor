@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import pkg from '../package.json';
 import './index.css';
 import App from './App';
+import Loading from './Loading'
 import CacheBuster from 'react-cache-buster';
 import reportWebVitals from './reportWebVitals';
 
@@ -13,6 +14,7 @@ root.render(
     currentVersion={pkg.version}
     isEnabled={isProduction} //If false, the library is disabled.
     isVerboseMode={false} //If true, the library writes verbose logs to console.
+    loadingComponent={<Loading open={true} />} //If not pass, nothing appears at the time of new version check.
   >
     <App />
   </CacheBuster>,
