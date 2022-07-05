@@ -10,7 +10,7 @@ import './Home.css';
 const Home = () => {
 
 
-  const [blockNumber, setBlockNumber] = useState(null);
+  const [blockNumber, setBlockNumber] = useState('');
 
   const startMonitoring = async () => {
     console.log(process.env)
