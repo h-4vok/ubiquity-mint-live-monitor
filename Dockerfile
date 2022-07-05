@@ -1,8 +1,10 @@
 FROM node:14.18.0-alpine AS builder
 WORKDIR /src
+COPY /build_npmrc.sh .
 COPY /.env .
 COPY /package.json .
 COPY /package-lock.json .
+RUN ./build_npmrc.sh
 RUN npm install
 COPY /public/ ./public
 COPY /src/ ./src
