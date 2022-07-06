@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import pkg from '../package.json';
 import './index.css';
+import './background.css';
 import App from './App';
 import Loading from './components/common/Loading'
 import CacheBuster from 'react-cache-buster';
