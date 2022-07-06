@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Container, Box, Grid } from "@mui/material";
+import { Container, Box, Grid } from "@mui/material";
 import AddToQueueIcon from "@mui/icons-material/AddToQueue";
 import { Monitor } from "../../lib/monitor";
 import "./HomePage.css";

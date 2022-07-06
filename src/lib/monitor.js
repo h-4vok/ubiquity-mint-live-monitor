@@ -4,6 +4,7 @@ import axios from "axios";
 export class Monitor {
     #apiKey
     #blockNumber
+    #latestBlockNumber
     #client
 
     constructor(apiKey, blockNumber) {
@@ -18,14 +19,31 @@ export class Monitor {
       console.log(this.#blockNumber)
       console.log(this.#client)
 
-      await this.getBlock();
+      this.#latestBlockNumber = await this.getLatestBlockNumber()
+
+      await this.getBlock()
+    }
+
+    async getLatestBlockNumber() {
+      try {
+        const { data } = await this.#client
+                                    .syncApi
+                                    .currentBlockNumber(PROTOCOL.SOLANA, NETWORKS.MAIN_NET)
+        
+        console.log({data})
+        return data
+      } catch (e) {
+        console.log(`error code::${e.response.status} url::${e.config.url}`)
+      }
     }
 
     async getBlock() {
       console.log("getBlock")
 
       try {
-        const { data } = await this.#client.blocksApi.getBlock(PROTOCOL.SOLANA, NETWORKS.MAIN_NET, this.#blockNumber)
+        const { data } = await this.#client
+                                      .blocksApi
+                                      .getBlock(PROTOCOL.SOLANA, NETWORKS.MAIN_NET, this.#blockNumber)
         console.log({data})
 
         // TODO: Change this logic to find minting txs, I'm getting an example tx here:
