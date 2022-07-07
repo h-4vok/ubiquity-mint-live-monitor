@@ -1,12 +1,14 @@
-import React, { useEffect } from "react"
-import { Grid, Stack } from "@mui/material"
+import React, { useState, useEffect } from "react"
+import { Grid, Stack, Box } from "@mui/material";
 import { parse } from 'query-string'
 import { Title, Label } from "../atoms"
-import { FungibleTokenRow } from "../molecules"
+import { FungibleTokenRow, BasicModal } from "../molecules";
 import { Monitor } from "../../lib/monitor"
 import { useNFTHandler } from '../../lib/nftHandler/useNFTHandler'
 
 export const LiveMonitorPage = (props) => {
+  const [openModal, setOpenModal] = useState(false);
+  const [selectedNft, setSelectedNft] = useState(null);
   const { nfts } = useNFTHandler()
   console.log({nfts})
 
@@ -26,8 +28,13 @@ export const LiveMonitorPage = (props) => {
     startMonitoring();
   }, [props.location.search])
 
+  const openNftDetail = (nftData) => {
+    setSelectedNft(nftData);
+    setOpenModal(true);
+  };
+
   return (
-    <>
+    <Box>
       <Grid container className="text-align--left" spacing={2}>
         <Grid item xs={12}>
           <Title variant="h5">Ubiquity Live Mint Monitor</Title>
@@ -37,9 +44,16 @@ export const LiveMonitorPage = (props) => {
         </Grid>
       </Grid>
       <Stack spacing={2} className="margin-top--20px">
-        <FungibleTokenRow />
-        <FungibleTokenRow />
+        <FungibleTokenRow onOpenNftDetail={openNftDetail} />
+        <FungibleTokenRow onOpenNftDetail={openNftDetail} />
+        <FungibleTokenRow onOpenNftDetail={openNftDetail} />
+        <FungibleTokenRow onOpenNftDetail={openNftDetail} />
       </Stack>
-    </>
+      <BasicModal
+        open={openModal}
+        setOpen={setOpenModal}
+        nftData={selectedNft}
+      />
+    </Box>
   );
 }
