@@ -6,9 +6,12 @@ import { useNFTHandler } from '../../lib/nftHandler/useNFTHandler'
 import { GlobalState } from '../../lib/global'
 import { Observer } from '../../lib/global'
 import { Title, BlockInput, StretchedButton } from "../atoms"
+import { liveMonitorLink } from "../../lib/constants";
+import { useHistory } from "react-router-dom";
 import "./HomePage.css"
 
 export const HomePage = () => {
+  const history = useHistory();
   const [blockNumber, setBlockNumber] = useState("")
   const { nfts, setNFTs, getNFTs } = useNFTHandler()
   console.log({nfts})
@@ -31,7 +34,9 @@ export const HomePage = () => {
     <Container className="text-align--center">
       <Title>Ubiquity</Title>
       <Title>Live Mint Monitor</Title>
-      <Title variant="h6">Monitor all NFT mints in the Solana blockchain</Title>
+      <Title variant="h6">
+        Monitor all NFT mints in the Solana blockchain
+      </Title>
 
       <Box className="box">
         <Grid container spacing={3}>
@@ -46,7 +51,7 @@ export const HomePage = () => {
           <Grid item xs={12} sm={4}>
             <StretchedButton
               endIcon={<AddToQueueIcon />}
-              onClick={() => startMonitoring()}
+              onClick={() => goToMonitorPage(blockNumber, history)}
             >
               GO!
             </StretchedButton>
@@ -54,5 +59,12 @@ export const HomePage = () => {
         </Grid>
       </Box>
     </Container>
-  )
+  );
+};
+  
+const goToMonitorPage = (blockNumber, history) => {
+  const startBlockNumber = blockNumber ? blockNumber : "current";
+  const url = `${liveMonitorLink}?startBlockNumber=${startBlockNumber}`;
+
+  history.push(url);
 }
