@@ -1,3 +1,6 @@
+import { Observer } from './observer'
+
 export const GlobalState = {
-  Observer: null,
+  NFTHandler: null,
+  Observer:  new Observer(),
 };

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback }  from 'react'
 import * as _ from 'lodash'
 
 const NFTHandlerContext = React.createContext(null)
@@ -6,7 +6,9 @@ const NFTHandlerContext = React.createContext(null)
 const NFTHandlerProvider = ({ children }) => {
   const [nfts, setNFTs] = React.useState([]);
   
-  const getNFTs = () => _.clone(nfts, false)
+  const getCloneNFTs = () => _.clone(nfts, false)
+  
+  const getNFTs = useCallback(getCloneNFTs, [nfts]);
 
   const value = React.useMemo(
     () => ({
@@ -14,7 +16,7 @@ const NFTHandlerProvider = ({ children }) => {
       setNFTs,
       getNFTs
     }),
-    [nfts]
+    [nfts, getNFTs]
   );
 
   return (

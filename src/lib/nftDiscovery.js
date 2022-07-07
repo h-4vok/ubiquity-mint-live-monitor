@@ -24,7 +24,7 @@ export class NftDiscovery {
 
             GlobalState.Observer.emitNFTEvent(data);
         } catch (e) {
-            console.log(`error code::${e.response.status} url::${e.config.url}`)
+          console.error({ e })
         }
       }
     }
