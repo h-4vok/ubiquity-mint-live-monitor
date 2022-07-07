@@ -1,19 +1,28 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { Container, Box, Grid } from "@mui/material"
 import AddToQueueIcon from "@mui/icons-material/AddToQueue"
-import { Monitor } from "../../lib/monitor"
-import { useNFTHandler } from '../../lib/nftHandler/useNFTHandler'
-import { GlobalState } from '../../lib/global'
-import { Observer } from '../../lib/global'
 import { Title, BlockInput, StretchedButton } from "../atoms"
-import { liveMonitorLink } from "../../lib/constants";
-import { useHistory } from "react-router-dom";
+import { liveMonitorLink } from "../../lib/constants"
+import { useHistory } from "react-router-dom"
+import { NFTHandler, useNFTHandler } from "../../lib/nftHandler"
+import { GlobalState } from '../../lib/global'
 
 export const HomePage = () => {
   const history = useHistory();
+  const { setNFTs, getNFTs } = useNFTHandler()
   const [blockNumber, setBlockNumber] = useState("")
-  const { nfts, setNFTs, getNFTs } = useNFTHandler()
-  console.log({nfts})
+
+  const goToMonitorPage = (blockNumber, history) => {
+    const startBlockNumber = blockNumber ? blockNumber : "current";
+    const url = `${liveMonitorLink}?startBlockNumber=${startBlockNumber}`;
+  
+    history.push(url);
+  }
+
+  useEffect(() => {
+    console.log("Initialize NFTHandler")
+    GlobalState.NFTHandler = new NFTHandler(getNFTs, setNFTs)
+  }, [getNFTs, setNFTs])
 
   return (
     <Container className="text-align--center">
@@ -46,10 +55,3 @@ export const HomePage = () => {
     </Container>
   );
 };
-  
-const goToMonitorPage = (blockNumber, history) => {
-  const startBlockNumber = blockNumber ? blockNumber : "current";
-  const url = `${liveMonitorLink}?startBlockNumber=${startBlockNumber}`;
-
-  history.push(url);
-}
