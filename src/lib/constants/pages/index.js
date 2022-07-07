@@ -1,4 +1,5 @@
 const homeHash = "#/"
 const homeLink = "/"
+const liveMonitorLink = "/monitor";
 
-export { homeHash, homeLink }
+export { homeHash, homeLink, liveMonitorLink }
