@@ -1,15 +1,13 @@
-import { UbiquityClient, NETWORKS, PROTOCOL } from "@ubiquity/ubiquity-ts-client";
-import { Distiller } from "./distiller";
+import { UbiquityClient, NETWORKS, PROTOCOL } from "@ubiquity/ubiquity-ts-client"
+import { Distiller } from "./distiller"
 
 export class Monitor {
-    #apiKey
     #blockNumber
     #latestBlockNumber
     #client
     #distiller
 
     constructor(apiKey, blockNumber) {
-      this.#apiKey = apiKey
       this.#blockNumber = blockNumber
       this.#client= new UbiquityClient(apiKey);
       this.#distiller = new Distiller();
@@ -21,6 +19,7 @@ export class Monitor {
       this.#latestBlockNumber = await this.getLatestBlockNumber()
 
       const block = await this.getBlock()
+      await this.#distiller.findNFTcandidates(block)
     }
 
     async getLatestBlockNumber() {
