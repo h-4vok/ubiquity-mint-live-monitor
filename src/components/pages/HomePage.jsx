@@ -8,27 +8,12 @@ import { Observer } from '../../lib/global'
 import { Title, BlockInput, StretchedButton } from "../atoms"
 import { liveMonitorLink } from "../../lib/constants";
 import { useHistory } from "react-router-dom";
-import "./HomePage.css"
 
 export const HomePage = () => {
   const history = useHistory();
   const [blockNumber, setBlockNumber] = useState("")
   const { nfts, setNFTs, getNFTs } = useNFTHandler()
   console.log({nfts})
-
-  const startMonitoring = async () => {
-    console.log(process.env)
-    const startBlockNumber = blockNumber ? blockNumber : "current"
-    console.log({ startBlockNumber })
-
-    GlobalState.Observer = new Observer(setNFTs, getNFTs)
-    
-    const monitor = new Monitor(
-      process.env.REACT_APP_API_KEY,
-      startBlockNumber
-    )
-    await monitor.start()
-  }
 
   return (
     <Container className="text-align--center">
