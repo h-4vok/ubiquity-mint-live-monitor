@@ -3,13 +3,13 @@ import { Grid, Stack, Box } from "@mui/material";
 import { parse } from 'query-string'
 import { Title, Label } from "../atoms"
 import { FungibleTokenRow, BasicModal } from "../molecules";
-import { Monitor } from "../../lib/monitor"
 import { useNFTHandler } from '../../lib/nftHandler/useNFTHandler'
+import { GlobalState } from "../../lib/global";
 
 export const LiveMonitorPage = (props) => {
   const [openModal, setOpenModal] = useState(false);
   const [selectedNft, setSelectedNft] = useState(null);
-  const { nfts } = useNFTHandler()
+  const { nfts, monitorStopped } = useNFTHandler()
   console.log({nfts})
 
   useEffect(() => {
@@ -18,11 +18,7 @@ export const LiveMonitorPage = (props) => {
       const blockNumber = startBlockNumber ? startBlockNumber : "current"
       console.log({ blockNumber })
       
-      const monitor = new Monitor(
-        process.env.REACT_APP_API_KEY,
-        blockNumber
-      )
-      await monitor.run()
+      await GlobalState.Monitor.start(blockNumber)
     }
 
     startMonitoring();
@@ -42,6 +38,9 @@ export const LiveMonitorPage = (props) => {
         <Grid item xs={12}>
           <Label>Exploring... (current / latest)</Label>
         </Grid>
+        {
+          monitorStopped && <Grid item xs={12}><Label>Max nfts reached, monitor has been stopped.</Label></Grid>
+        }
       </Grid>
       <Stack spacing={2} className="margin-top--20px">
         <FungibleTokenRow onOpenNftDetail={openNftDetail} />
