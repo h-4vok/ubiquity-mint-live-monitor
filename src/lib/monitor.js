@@ -3,12 +3,14 @@ import { Distiller } from "./distiller"
 import { delay } from './delay'
 
 export class Monitor {
+    #startedBlock
     #blockNumber
     #latestBlockNumber
     #client
     #distiller
 
     constructor(apiKey, blockNumber) {
+      this.#startedBlock = blockNumber
       this.#blockNumber = blockNumber
       this.#client= new UbiquityClient(apiKey);
       this.#distiller = new Distiller();
@@ -21,20 +23,13 @@ export class Monitor {
       
       while (this.#latestBlockNumber >= this.#blockNumber) {
         console.log(`Monitoring on block number: ${this.#blockNumber}`)
-        
+
         if (this.#blockNumber === -1) this.#blockNumber = this.#latestBlockNumber
   
         // Cancel monitoring if we have reached the ending block
         // which is only used for debugging purposes
         if (!!this.#latestBlockNumber && this.#blockNumber > this.#latestBlockNumber)
           return
-  
-        // Inform current mining status
-        /*GlobalState.AppComponent.setBlocksExecuted({
-          startBlock: context.startedBlock,
-          currentBlock: this.#blockNumber,
-          latestBlock,
-        })*/
   
         console.info(`${this.#blockNumber} / ${this.#latestBlockNumber}`)
   

@@ -1,15 +1,12 @@
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import { Container, Box, Grid } from "@mui/material"
 import AddToQueueIcon from "@mui/icons-material/AddToQueue"
 import { Title, BlockInput, StretchedButton } from "../atoms"
 import { liveMonitorLink } from "../../lib/constants"
 import { useHistory } from "react-router-dom"
-import { NFTHandler, useNFTHandler } from "../../lib/nftHandler"
-import { GlobalState } from '../../lib/global'
 
 export const HomePage = () => {
   const history = useHistory();
-  const { setNFTs, getNFTs } = useNFTHandler()
   const [blockNumber, setBlockNumber] = useState("")
 
   const goToMonitorPage = (blockNumber, history) => {
@@ -18,11 +15,6 @@ export const HomePage = () => {
   
     history.push(url);
   }
-
-  useEffect(() => {
-    console.log("Initialize NFTHandler")
-    GlobalState.NFTHandler = new NFTHandler(getNFTs, setNFTs)
-  }, [getNFTs, setNFTs])
 
   return (
     <Container className="text-align--center">
