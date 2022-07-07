@@ -1,0 +1,59 @@
+:root {
+  --gradient-shadow: linear-gradient(
+    45deg,
+    #fb0094,
+    #0000ff,
+    #00ff00,
+    #ffff00,
+    #ff0000,
+    #fb0094,
+    #0000ff,
+    #00ff00,
+    #ffff00,
+    #ff0000
+  );
+}
+.gradient-shadow {
+  display: flex;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+	color: #fff;
+	text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 50px;
+	font-size: 50px;
+  width: 200px;
+  height: 200px;
+  background: linear-gradient(0deg, #000, #262626);
+}
+.gradient-shadow:before,
+.gradient-shadow:after {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  background: var(--gradient-shadow);
+  background-size: 400%;
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  z-index: -1;
+  animation: animateBackground 20s linear infinite;
+}
+
+.gradient-shadow:after {
+  filter: blur(20px);
+}
+
+@keyframes animateBackground {
+  0% {
+    background-position: 0 0;
+  }
+  50% {
+    background-position: 300% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}

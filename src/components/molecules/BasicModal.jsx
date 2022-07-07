@@ -28,11 +28,13 @@ export function BasicModal({ open, setOpen, nftData }) {
       <Paper sx={containerStyle} elevation={4}>
         <Grid container className="text-align--center">
           <Grid item xs={12}>
-            <img
-              className="fungible-token-preview"
-              src="https://www.arweave.net/oiY7orCWNjVt8HkSgZKt2zql7LcsOpoo5W8W_fjKmIg?ext=png"
-              alt=""
-            />
+            <div className="gradient-shadow">
+              <img
+                className="fungible-token-preview"
+                src="https://www.arweave.net/oiY7orCWNjVt8HkSgZKt2zql7LcsOpoo5W8W_fjKmIg?ext=png"
+                alt=""
+              />
+            </div>
           </Grid>
           <Grid item xs={12}>
             <Label variant="h6">NFT Name</Label>
