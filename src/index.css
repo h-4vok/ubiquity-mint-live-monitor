@@ -1,6 +1,6 @@
 :root {
-  --heading-font: 'Inter', sans-serif;
-  --body-font: 'Kanit', sans-serif;
+  --heading-font: "Inter", sans-serif;
+  --body-font: "Kanit", sans-serif;
 }
 
 body {
@@ -10,7 +10,7 @@ body {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 
@@ -85,4 +85,13 @@ iframe {
 
 .label {
   font-family: var(--body-font);
+}
+
+.fungible-token-thumbnail {
+  width: 75px;
+  height: 75px;
+}
+
+.margin-top--20px {
+  margin-top: 20px;
 }

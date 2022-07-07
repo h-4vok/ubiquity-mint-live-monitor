@@ -9,16 +9,23 @@
 //   );
 //   await monitor.start();
 // };
-import { Grid } from "@mui/material";
-import { Title, CircularProgressIcon, Label } from "../atoms";
+import { Grid, Stack } from "@mui/material";
+import { Title, Label } from "../atoms";
+import { FungibleTokenRow } from "../molecules";
 
 export const LiveMonitorPage = () => (
-  <Grid container className="text-align--left" spacing={2}>
-    <Grid item xs={12}>
-      <Title variant="h5">Ubiquity Live Mint Monitor</Title>
+  <>
+    <Grid container className="text-align--left" spacing={2}>
+      <Grid item xs={12}>
+        <Title variant="h5">Ubiquity Live Mint Monitor</Title>
+      </Grid>
+      <Grid item xs={12}>
+        <Label>Exploring... (current / latest)</Label>
+      </Grid>
     </Grid>
-    <Grid item xs={12}>
-      <Label>Exploring... (current / latest)</Label>
-    </Grid>
-  </Grid>
+    <Stack spacing={2} className="margin-top--20px">
+      <FungibleTokenRow />
+      <FungibleTokenRow />
+    </Stack>
+  </>
 );
