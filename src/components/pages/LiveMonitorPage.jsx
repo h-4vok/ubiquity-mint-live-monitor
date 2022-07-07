@@ -22,7 +22,7 @@ export const LiveMonitorPage = (props) => {
         process.env.REACT_APP_API_KEY,
         blockNumber
       )
-      await monitor.start()
+      await monitor.run()
     }
 
     startMonitoring();

@@ -1,5 +1,6 @@
 import { UbiquityClient, NETWORKS, PROTOCOL } from "@ubiquity/ubiquity-ts-client"
 import { Distiller } from "./distiller"
+import { delay } from './delay'
 
 export class Monitor {
     #blockNumber
@@ -13,13 +14,41 @@ export class Monitor {
       this.#distiller = new Distiller();
     }
 
-    async start() {
-      console.log("starting monitor")
+    async run() {
+      console.log('Running monitor')
 
       this.#latestBlockNumber = await this.getLatestBlockNumber()
-
-      const block = await this.getBlock()
-      await this.#distiller.findNFTcandidates(block)
+      
+      while (this.#latestBlockNumber >= this.#blockNumber) {
+        console.log(`Monitoring on block number: ${this.#blockNumber}`)
+        
+        if (this.#blockNumber === -1) this.#blockNumber = this.#latestBlockNumber
+  
+        // Cancel monitoring if we have reached the ending block
+        // which is only used for debugging purposes
+        if (!!this.#latestBlockNumber && this.#blockNumber > this.#latestBlockNumber)
+          return
+  
+        // Inform current mining status
+        /*GlobalState.AppComponent.setBlocksExecuted({
+          startBlock: context.startedBlock,
+          currentBlock: this.#blockNumber,
+          latestBlock,
+        })*/
+  
+        console.info(`${this.#blockNumber} / ${this.#latestBlockNumber}`)
+  
+        const block = await this.getBlock()
+        if (block) {
+          await this.#distiller.findNFTcandidates(block)
+        }
+  
+        this.#blockNumber++
+  
+        await delay(1000)
+      }
+  
+      setTimeout(async () => await this.run(), 1000)
     }
 
     async getLatestBlockNumber() {

@@ -9,6 +9,8 @@ export class NFTHandler {
 
   addNFT = (nft) => {
     const nfts = this.#getNFTs()
-    this.#setNFTs([...nfts, nft])
+    nfts.push(nft)
+    console.log('NFTHandler', nfts)
+    this.#setNFTs(nfts)
   }
 }
