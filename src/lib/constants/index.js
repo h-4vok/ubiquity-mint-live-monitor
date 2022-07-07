@@ -1,4 +1,5 @@
 export {
   homeHash,
-  homeLink
+  homeLink,
+  liveMonitorLink
 } from "./pages";
