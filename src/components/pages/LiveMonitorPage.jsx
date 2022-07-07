@@ -9,12 +9,12 @@
 //   );
 //   await monitor.start();
 // };
-import { Grid, Stack } from "@mui/material";
+import { Grid, Stack, Container, Box } from "@mui/material";
 import { Title, Label } from "../atoms";
 import { FungibleTokenRow } from "../molecules";
 
 export const LiveMonitorPage = () => (
-  <>
+  <Box>
     <Grid container className="text-align--left" spacing={2}>
       <Grid item xs={12}>
         <Title variant="h5">Ubiquity Live Mint Monitor</Title>
@@ -26,6 +26,8 @@ export const LiveMonitorPage = () => (
     <Stack spacing={2} className="margin-top--20px">
       <FungibleTokenRow />
       <FungibleTokenRow />
+      <FungibleTokenRow />
+      <FungibleTokenRow />
     </Stack>
-  </>
+  </Box>
 );
