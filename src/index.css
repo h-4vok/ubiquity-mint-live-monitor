@@ -92,6 +92,20 @@ iframe {
   height: 75px;
 }
 
+.fungible-token-preview {
+  width: 200px;
+  height: 200px;
+}
+
 .margin-top--20px {
   margin-top: 20px;
 }
+
+.padding--40px {
+  padding: 2em;
+}
+
+.hover-animation {
+  transition: box-shadow 0s;
+}
+
