@@ -1,23 +1,31 @@
-import React, { useState } from "react";
-import { Container, Box, Grid } from "@mui/material";
-import AddToQueueIcon from "@mui/icons-material/AddToQueue";
-import { Monitor } from "../../lib/monitor";
-import "./HomePage.css";
-import { Title, BlockInput, StretchedButton } from "../atoms";
+import React, { useState } from "react"
+import { Container, Box, Grid } from "@mui/material"
+import AddToQueueIcon from "@mui/icons-material/AddToQueue"
+import { Monitor } from "../../lib/monitor"
+import { useNFTHandler } from '../../lib/nftHandler/useNFTHandler'
+import { GlobalState } from '../../lib/global'
+import { Observer } from '../../lib/global'
+import { Title, BlockInput, StretchedButton } from "../atoms"
+import "./HomePage.css"
 
 export const HomePage = () => {
-  const [blockNumber, setBlockNumber] = useState("");
+  const [blockNumber, setBlockNumber] = useState("")
+  const { nfts, setNFTs, getNFTs } = useNFTHandler()
+  console.log({nfts})
 
   const startMonitoring = async () => {
-    console.log(process.env);
-    const startBlockNumber = blockNumber ? blockNumber : "current";
-    console.log({ startBlockNumber });
+    console.log(process.env)
+    const startBlockNumber = blockNumber ? blockNumber : "current"
+    console.log({ startBlockNumber })
+
+    GlobalState.Observer = new Observer(setNFTs, getNFTs)
+    
     const monitor = new Monitor(
       process.env.REACT_APP_API_KEY,
       startBlockNumber
-    );
-    await monitor.start();
-  };
+    )
+    await monitor.start()
+  }
 
   return (
     <Container className="text-align--center">
@@ -46,5 +54,5 @@ export const HomePage = () => {
         </Grid>
       </Box>
     </Container>
-  );
-};
+  )
+}
