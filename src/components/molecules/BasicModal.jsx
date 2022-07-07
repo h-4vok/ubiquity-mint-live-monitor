@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Grid, Paper, Container, Typography, Modal } from "@mui/material";
+import { Grid, Paper, Modal } from "@mui/material";
 import { Label } from "../atoms";
 
 const containerStyle = {
