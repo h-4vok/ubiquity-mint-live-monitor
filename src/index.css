@@ -23,6 +23,10 @@ code {
   text-align: center;
 }
 
+.text-align--left {
+  text-align: left;
+}
+
 .box {
   padding-top: 20px;
 }
@@ -77,4 +81,8 @@ iframe {
   to {
     transform: rotate(360deg);
   }
+}
+
+.label {
+  font-family: var(--body-font);
 }
