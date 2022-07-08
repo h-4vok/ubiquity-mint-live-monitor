@@ -1,9 +1,10 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { useHistory } from "react-router-dom"
 import { Container, Box, Grid } from "@mui/material"
 import AddToQueueIcon from "@mui/icons-material/AddToQueue"
 import { Title, BlockInput, StretchedButton } from "../atoms"
 import { liveMonitorLink } from "../../lib/constants"
+import { GlobalState } from "../../lib/global"
 
 export const HomePage = () => {
   const history = useHistory();
@@ -15,6 +16,13 @@ export const HomePage = () => {
   
     history.push(url);
   }
+
+  useEffect(() => {
+    if (GlobalState.Monitor && GlobalState.Monitor.isRunning()) {
+      GlobalState.Monitor.reset()
+      GlobalState.NFTHandler.reset()
+    }
+  }, [])
 
   return (
     <Container className="text-align--center">

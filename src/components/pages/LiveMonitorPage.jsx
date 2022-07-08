@@ -19,8 +19,6 @@ export const LiveMonitorPage = (props) => {
   }, [nfts])
 
   useEffect(() => {
-    GlobalState.Monitor = null
-
     const startMonitoring = async () => {
       let { startBlockNumber } = parse(props.location.search)
       startBlockNumber = startBlockNumber || "current"
@@ -30,7 +28,6 @@ export const LiveMonitorPage = (props) => {
       await GlobalState.Monitor.start(startBlockNumber)
     }
 
-    setMonitor()
     startMonitoring()
   }, [props.location.search, setMonitor])
 

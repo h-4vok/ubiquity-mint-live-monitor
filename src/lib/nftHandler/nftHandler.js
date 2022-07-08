@@ -3,10 +3,12 @@ import { GlobalState } from '../global'
 export class NFTHandler {
   #getNFTs
   #setNFTs
+  #resetNFTHandlerState
 
-  constructor(getNFTs, setNFTs) {
+  constructor(getNFTs, setNFTs, resetNFTHandlerState) {
     this.#getNFTs = getNFTs
     this.#setNFTs = setNFTs
+    this.#resetNFTHandlerState = resetNFTHandlerState
   }
 
   
@@ -20,4 +22,6 @@ export class NFTHandler {
 
     this.#setNFTs([...nfts, nft])
   }
+
+  reset = () => this.#resetNFTHandlerState()
 }
