@@ -4,7 +4,7 @@ export class NFTHandler {
   #getNFTs
   #setNFTs
 
-  constructor(getNFTs, setNFTs, resetNFTHandlerState) {
+  constructor(getNFTs, setNFTs) {
     this.#getNFTs = getNFTs
     this.#setNFTs = setNFTs
   }
