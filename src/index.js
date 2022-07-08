@@ -9,6 +9,7 @@ import Loading from './components/common/Loading'
 import CacheBuster from 'react-cache-buster';
 import reportWebVitals from './reportWebVitals';
 import { NFTHandlerProvider } from './lib/nftHandler'
+import { MonitorProvider } from './lib/monitor'
 
 const isProduction = process.env.NODE_ENV === 'production'
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -19,9 +20,11 @@ root.render(
     isVerboseMode={false} //If true, the library writes verbose logs to console.
     loadingComponent={<Loading open={true} />} //If not pass, nothing appears at the time of new version check.
   >
-    <NFTHandlerProvider>
-      <App />
-    </NFTHandlerProvider>
+    <MonitorProvider>
+      <NFTHandlerProvider>
+        <App />
+      </NFTHandlerProvider>
+    </MonitorProvider>
   </CacheBuster>,
 );
 

@@ -9,13 +9,12 @@ class NFTHandlerProvider extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      nfts: [],
+      nfts: []
     }
 
-    console.log("Initialize NFTHandler")
     GlobalState.NFTHandler = new NFTHandler(
       this.#getNFTs,
-      this.#setNFTs,
+      this.#setNFTs
     )
   }
   

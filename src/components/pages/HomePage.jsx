@@ -1,9 +1,9 @@
 import React, { useState } from "react"
+import { useHistory } from "react-router-dom"
 import { Container, Box, Grid } from "@mui/material"
 import AddToQueueIcon from "@mui/icons-material/AddToQueue"
 import { Title, BlockInput, StretchedButton } from "../atoms"
 import { liveMonitorLink } from "../../lib/constants"
-import { useHistory } from "react-router-dom"
 
 export const HomePage = () => {
   const history = useHistory();
