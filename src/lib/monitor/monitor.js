@@ -3,7 +3,8 @@ import { Distiller } from "../distiller"
 import { delay } from '../delay'
 
 export class Monitor {
-    #run
+    #processing
+    #running
     #client
     #distiller
     #stopMonitor
@@ -26,10 +27,11 @@ export class Monitor {
       const latestBlockNumber = await this.#getLatestBlockNumber()
       let blockNumber = startBlockNumber === 'current' ? latestBlockNumber : startBlockNumber
       this.#setLatestBlockNumber(latestBlockNumber)
-      this.#run = true
+      this.#running = true
 
       while (latestBlockNumber >= blockNumber && this.isRunning()) {
         console.log(`Monitoring on block number: ${blockNumber}`)
+        this.#processing = true
 
         if (blockNumber === -1) blockNumber = latestBlockNumber
         this.#setBlockNumber(blockNumber)
@@ -49,6 +51,7 @@ export class Monitor {
         blockNumber++
 
         await delay(1000)
+        this.#processing = false
       }
 
       if (!this.isRunning()) {
@@ -60,16 +63,18 @@ export class Monitor {
 
     stop() {
       console.log(`Monitor ended, max nfts ammount(${process.env.REACT_APP_MAX_NFTS}) has been reached`)
-      this.#run = false
+      this.#running = false
       this.#stopMonitor()
     }
 
     reset() {
-      this.#run = false
+      this.#running = false
       this.#resetMonitorState()
     }
 
-    isRunning = () => this.#run
+    isRunning = () => this.#running
+
+    isProcessing = () => this.#processing
 
     async #getLatestBlockNumber() {
       console.log("getLatestBlockNumber")

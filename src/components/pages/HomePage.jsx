@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import { useHistory } from "react-router-dom"
 import { Container, Box, Grid } from "@mui/material"
 import AddToQueueIcon from "@mui/icons-material/AddToQueue"
 import { Title, BlockInput, StretchedButton } from "../atoms"
 import { liveMonitorLink } from "../../lib/constants"
-import { GlobalState } from "../../lib/global"
+import {  resetStates } from "../../lib/global"
 import { useMonitor } from "../../lib/monitor"
 
 export const HomePage = () => {
@@ -12,18 +12,12 @@ export const HomePage = () => {
   const [blockNumber, setBlockNumber] = useState("")
   const { setStartBlockNumber } = useMonitor()
 
-  const goToMonitorPage = (blockNumber, history) => {
-    setStartBlockNumber(blockNumber || 'current')
-  
-    history.push(liveMonitorLink);
-  }
+  const goToMonitorPage = async (blockNumber, history) => {
+    await setStartBlockNumber(blockNumber || 'current')
+    await resetStates()
 
-  useEffect(() => {
-    if (GlobalState.Monitor && GlobalState.Monitor.isRunning()) {
-      GlobalState.Monitor.reset()
-      GlobalState.NFTHandler.reset()
-    }
-  }, [])
+    history.push(liveMonitorLink)
+  }
 
   return (
     <Container className="text-align--center">
