@@ -28,7 +28,7 @@ export class Monitor {
       this.#setLatestBlockNumber(latestBlockNumber)
       this.#run = true
 
-      while (latestBlockNumber >= blockNumber && this.#run) {
+      while (latestBlockNumber >= blockNumber && this.isRunning()) {
         console.log(`Monitoring on block number: ${blockNumber}`)
 
         if (blockNumber === -1) blockNumber = latestBlockNumber
