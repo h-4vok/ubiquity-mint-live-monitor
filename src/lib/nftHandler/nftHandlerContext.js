@@ -14,7 +14,8 @@ class NFTHandlerProvider extends React.Component {
 
     GlobalState.NFTHandler = new NFTHandler(
       this.#getNFTs,
-      this.#setNFTs
+      this.#setNFTs,
+      this.#resetNFTHandlerState
     )
   }
   
@@ -23,6 +24,12 @@ class NFTHandlerProvider extends React.Component {
   #setNFTs = (nfts) => {
     this.setState(() => ({
       nfts,
+    }))
+  }
+
+  #resetNFTHandlerState = () => {
+    this.setState(() => ({
+      nfts: []
     }))
   }
 

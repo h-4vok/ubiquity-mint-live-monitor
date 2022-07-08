@@ -9,22 +9,24 @@ export class Monitor {
     #stopMonitor
     #setBlockNumber
     #setLatestBlockNumber
+    #resetMonitorState
 
-    constructor(apiKey, stopMonitor, setBlockNumber, setLatestBlockNumber) {
-      this.#run = true
+    constructor(apiKey, stopMonitor, setBlockNumber, setLatestBlockNumber, resetMonitorState) {
       this.#client= new UbiquityClient(apiKey)
       this.#distiller = new Distiller()
       this.#stopMonitor = stopMonitor
       this.#setBlockNumber = setBlockNumber
       this.#setLatestBlockNumber = setLatestBlockNumber
+      this.#resetMonitorState = resetMonitorState
     }
 
     async start(startBlockNumber) {
       console.log('Running monitor')
 
-      let blockNumber = startBlockNumber
-      const latestBlockNumber = await this.getLatestBlockNumber()
+      const latestBlockNumber = await this.#getLatestBlockNumber()
+      let blockNumber = startBlockNumber === 'current' ? latestBlockNumber : startBlockNumber
       this.#setLatestBlockNumber(latestBlockNumber)
+      this.#run = true
 
       while (latestBlockNumber >= blockNumber && this.#run) {
         console.log(`Monitoring on block number: ${blockNumber}`)
@@ -39,7 +41,7 @@ export class Monitor {
   
         console.info(`${blockNumber} / ${latestBlockNumber}`)
   
-        const block = await this.getBlock(blockNumber)
+        const block = await this.#getBlock(blockNumber)
         if (block) {
           await this.#distiller.findNFTcandidates(block)
         }
@@ -49,7 +51,7 @@ export class Monitor {
         await delay(1000)
       }
 
-      if (!this.#run) {
+      if (!this.isRunning()) {
         return
       }
   
@@ -62,7 +64,14 @@ export class Monitor {
       this.#stopMonitor()
     }
 
-    async getLatestBlockNumber() {
+    reset() {
+      this.#run = false
+      this.#resetMonitorState()
+    }
+
+    isRunning = () => this.#run
+
+    async #getLatestBlockNumber() {
       console.log("getLatestBlockNumber")
 
       try {
@@ -77,7 +86,7 @@ export class Monitor {
       }
     }
 
-    async getBlock(blockNumber) {
+    async #getBlock(blockNumber) {
       console.log("getBlock")
 
       try {

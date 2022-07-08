@@ -12,6 +12,14 @@ class MonitorProvider extends React.Component {
       blockNumber: 0,
       latestBlockNumber: 0
     }
+    
+    GlobalState.Monitor = new Monitor(
+      process.env.REACT_APP_API_KEY,
+      this.#stopMonitor,
+      this.#setBlockNumber,
+      this.#setLatestBlockNumber,
+      this.#resetMonitorState
+    )
   }
   
   #stopMonitor = () => {
@@ -32,19 +40,12 @@ class MonitorProvider extends React.Component {
     }))
   }
 
-  setMonitor = () => {
+  #resetMonitorState = () => {
     this.setState(() => ({
       monitorStopped: false,
       blockNumber: 0,
       latestBlockNumber: 0
     }))
-    
-    GlobalState.Monitor = new Monitor(
-      process.env.REACT_APP_API_KEY,
-      this.#stopMonitor,
-      this.#setBlockNumber,
-      this.#setLatestBlockNumber
-    )
   }
 
   render() {
