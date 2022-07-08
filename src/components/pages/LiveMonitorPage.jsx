@@ -45,7 +45,11 @@ export const LiveMonitorPage = () => {
           <Title variant="h5">Ubiquity Live Mint Monitor</Title>
         </Grid>
         <Grid item xs={12}>
-          <Label>Exploring... ({blockNumber} / {latestBlockNumber})</Label>
+          {
+            blockNumber && latestBlockNumber ? 
+            <Label>Exploring... ({blockNumber} / {latestBlockNumber})</Label> : 
+            <Label>Monitor is starting...</Label>
+          }
         </Grid>
         {
           monitorStopped && <Grid item xs={12}><Label>Max nfts reached, monitor has been stopped.</Label></Grid>
