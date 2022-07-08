@@ -4,7 +4,7 @@ import { Container, Box, Grid } from "@mui/material"
 import AddToQueueIcon from "@mui/icons-material/AddToQueue"
 import { Title, BlockInput, StretchedButton } from "../atoms"
 import { liveMonitorLink } from "../../lib/constants"
-import {  resetStates } from "../../lib/global"
+import { resetStates } from "../../lib/global"
 import { useMonitor } from "../../lib/monitor"
 
 export const HomePage = () => {
