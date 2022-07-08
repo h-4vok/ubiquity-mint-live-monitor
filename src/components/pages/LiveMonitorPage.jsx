@@ -11,7 +11,7 @@ export const LiveMonitorPage = (props) => {
   const [openModal, setOpenModal] = useState(false);
   const [selectedNft, setSelectedNft] = useState({});
   const { nfts } = useNFTHandler()
-  const { blockNumber, latestBlockNumber, monitorStopped, setMonitor } = useMonitor()
+  const { blockNumber, latestBlockNumber, monitorStopped } = useMonitor()
 
   // Debugging for debugging purposes
   useEffect(() => {
@@ -20,16 +20,20 @@ export const LiveMonitorPage = (props) => {
 
   useEffect(() => {
     const startMonitoring = async () => {
-      let { startBlockNumber } = parse(props.location.search)
-      startBlockNumber = startBlockNumber || "current"
-
+      const { startBlockNumber } = parse(props.location.search)
       console.log({ startBlockNumber })
       
       await GlobalState.Monitor.start(startBlockNumber)
     }
 
+    if (GlobalState.Monitor && GlobalState.Monitor.isRunning()) {
+      GlobalState.Monitor.reset()
+      GlobalState.NFTHandler.reset()
+    }
+    
     startMonitoring()
-  }, [props.location.search, setMonitor])
+
+  }, [props.location.search])
 
   const openNftDetail = (nftData) => {
     setSelectedNft(nftData);
