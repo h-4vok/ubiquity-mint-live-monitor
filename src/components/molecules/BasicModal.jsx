@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Grid, Paper, Modal } from "@mui/material";
+import { Grid, Paper, Modal, Link } from "@mui/material";
 import { Label } from "../atoms";
 
 const containerStyle = {
@@ -31,41 +31,41 @@ export function BasicModal({ open, setOpen, nftData }) {
             <div className="gradient-shadow">
               <img
                 className="fungible-token-preview"
-                src="https://www.arweave.net/oiY7orCWNjVt8HkSgZKt2zql7LcsOpoo5W8W_fjKmIg?ext=png"
-                alt=""
+                src={nftData.image}
+                alt={nftData.name}
               />
             </div>
           </Grid>
           <Grid item xs={12}>
-            <Label variant="h6">NFT Name</Label>
+            <Label variant="h6">{nftData.name}</Label>
           </Grid>
           <Grid item xs={12}>
-            <Label variant="span">external url</Label>
+            <Link href={nftData.external_url} target="_blank">
+              <Label variant="span">{nftData.external_url}</Label>
+            </Link>
           </Grid>
           <Grid item xs={12}>
-            <Label variant="span">seller basis fee</Label>
+            <Label variant="p">{nftData.description}</Label>
+          </Grid>
+          <Grid item xs={12}>
+            <Label variant="span">Seller fee: {nftData.seller_fee_basis_points}</Label>
           </Grid>
           <Grid item xs={12}>
             <Paper elevation={24}>
               <Grid container>
-                <Grid item xs={4}>
-                  <Label>attr</Label>
-                </Grid>
-                <Grid item xs={8}>
-                  <Label>value</Label>
-                </Grid>
-                <Grid item xs={4}>
-                  <Label>attr</Label>
-                </Grid>
-                <Grid item xs={8}>
-                  <Label>value</Label>
-                </Grid>
-                <Grid item xs={4}>
-                  <Label>attr</Label>
-                </Grid>
-                <Grid item xs={8}>
-                  <Label>value</Label>
-                </Grid>
+                {
+                  nftData.attributes && 
+                  nftData.attributes.map((attribute, index) =>
+                    <React.Fragment key={`ATTRIBUTE_${index}`}>
+                      <Grid item xs={4}>
+                        <Label>{attribute.trait_type}</Label>
+                      </Grid>
+                      <Grid item xs={8}>
+                        <Label>{attribute.value}</Label>
+                      </Grid>
+                    </React.Fragment>
+                  )
+                }
               </Grid>
             </Paper>
           </Grid>
