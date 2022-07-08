@@ -3,26 +3,34 @@ import { Grid, Stack, Box } from "@mui/material";
 import { parse } from 'query-string'
 import { Title, Label } from "../atoms"
 import { FungibleTokenRow, BasicModal } from "../molecules";
-import { useNFTHandler } from '../../lib/nftHandler/useNFTHandler'
+import { useNFTHandler } from '../../lib/nftHandler'
+import { useMonitor } from '../../lib/monitor'
 import { GlobalState } from "../../lib/global";
 
 export const LiveMonitorPage = (props) => {
   const [openModal, setOpenModal] = useState(false);
   const [selectedNft, setSelectedNft] = useState(null);
-  const { nfts, monitorStopped } = useNFTHandler()
-  console.log({nfts})
+  const { nfts } = useNFTHandler()
+  const { blockNumber, latestBlockNumber, monitorStopped, setMonitor } = useMonitor()
+
+  // Debugging for debugging purposes
+  useEffect(() => {
+    console.log({nfts})
+  }, [nfts])
 
   useEffect(() => {
     const startMonitoring = async () => {
-      const { startBlockNumber } = parse(props.location.search)
-      const blockNumber = startBlockNumber ? startBlockNumber : "current"
-      console.log({ blockNumber })
+      let { startBlockNumber } = parse(props.location.search)
+      startBlockNumber = startBlockNumber || "current"
+
+      console.log({ startBlockNumber })
       
-      await GlobalState.Monitor.start(blockNumber)
+      await GlobalState.Monitor.start(startBlockNumber)
     }
 
-    startMonitoring();
-  }, [props.location.search])
+    setMonitor()
+    startMonitoring()
+  }, [props.location.search, setMonitor])
 
   const openNftDetail = (nftData) => {
     setSelectedNft(nftData);
@@ -36,7 +44,7 @@ export const LiveMonitorPage = (props) => {
           <Title variant="h5">Ubiquity Live Mint Monitor</Title>
         </Grid>
         <Grid item xs={12}>
-          <Label>Exploring... (current / latest)</Label>
+          <Label>Exploring... ({blockNumber} / {latestBlockNumber})</Label>
         </Grid>
         {
           monitorStopped && <Grid item xs={12}><Label>Max nfts reached, monitor has been stopped.</Label></Grid>
