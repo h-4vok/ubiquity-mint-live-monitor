@@ -9,6 +9,7 @@ class MonitorProvider extends React.Component {
     super(props)
     this.state = {
       monitorStopped: false,
+      startBlockNumber: -1,
       blockNumber: 0,
       latestBlockNumber: 0
     }
@@ -22,6 +23,12 @@ class MonitorProvider extends React.Component {
     )
   }
   
+  setStartBlockNumber = (startBlockNumber) => {
+    this.setState(() => ({
+      startBlockNumber
+    }))
+  }
+
   #stopMonitor = () => {
     this.setState(() => ({
       monitorStopped: true,
@@ -53,7 +60,7 @@ class MonitorProvider extends React.Component {
       <MonitorContext.Provider
         value={{
           ...this.state,
-          setMonitor: this.setMonitor
+          setStartBlockNumber: this.setStartBlockNumber
         }}
       >
         {this.props.children}
