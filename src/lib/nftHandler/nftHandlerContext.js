@@ -1,29 +1,42 @@
-import React, { useCallback }  from 'react'
+import React  from 'react'
 import * as _ from 'lodash'
+import { NFTHandler } from "./nftHandler"
+import { GlobalState } from '../global'
 
 const NFTHandlerContext = React.createContext(null)
 
-const NFTHandlerProvider = ({ children }) => {
-  const [nfts, setNFTs] = React.useState([]);
-  
-  const getCloneNFTs = () => _.clone(nfts, false)
-  
-  const getNFTs = useCallback(getCloneNFTs, [nfts]);
+class NFTHandlerProvider extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      nfts: []
+    }
 
-  const value = React.useMemo(
-    () => ({
+    GlobalState.NFTHandler = new NFTHandler(
+      this.#getNFTs,
+      this.#setNFTs
+    )
+  }
+  
+  #getNFTs = () => _.clone(this.state.nfts, false)
+
+  #setNFTs = (nfts) => {
+    this.setState(() => ({
       nfts,
-      setNFTs,
-      getNFTs
-    }),
-    [nfts, getNFTs]
-  );
+    }))
+  }
 
-  return (
-    <NFTHandlerContext.Provider value={value}>
-      {children}
-    </NFTHandlerContext.Provider>
-  );
+  render() {
+    return (
+      <NFTHandlerContext.Provider
+        value={{
+          ...this.state,
+        }}
+      >
+        {this.props.children}
+      </NFTHandlerContext.Provider>
+    )
+  }
 }
 
 const NFTHandlerConsumer = NFTHandlerContext.Consumer
