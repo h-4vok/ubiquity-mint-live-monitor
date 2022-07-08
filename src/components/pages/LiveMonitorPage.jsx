@@ -9,7 +9,7 @@ import { GlobalState } from "../../lib/global";
 
 export const LiveMonitorPage = (props) => {
   const [openModal, setOpenModal] = useState(false);
-  const [selectedNft, setSelectedNft] = useState(null);
+  const [selectedNft, setSelectedNft] = useState({});
   const { nfts } = useNFTHandler()
   const { blockNumber, latestBlockNumber, monitorStopped, setMonitor } = useMonitor()
 
@@ -19,6 +19,8 @@ export const LiveMonitorPage = (props) => {
   }, [nfts])
 
   useEffect(() => {
+    GlobalState.Monitor = null
+
     const startMonitoring = async () => {
       let { startBlockNumber } = parse(props.location.search)
       startBlockNumber = startBlockNumber || "current"
@@ -51,10 +53,9 @@ export const LiveMonitorPage = (props) => {
         }
       </Grid>
       <Stack spacing={2} className="margin-top--20px">
-        <FungibleTokenRow onOpenNftDetail={openNftDetail} />
-        <FungibleTokenRow onOpenNftDetail={openNftDetail} />
-        <FungibleTokenRow onOpenNftDetail={openNftDetail} />
-        <FungibleTokenRow onOpenNftDetail={openNftDetail} />
+        {
+          nfts.map((nft, index) => <FungibleTokenRow key={`NFT_${index}`} nft={nft} onOpenNftDetail={() => openNftDetail(nft)} />)
+        }
       </Stack>
       <BasicModal
         open={openModal}
