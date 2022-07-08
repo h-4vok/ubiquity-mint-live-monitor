@@ -5,16 +5,17 @@ import AddToQueueIcon from "@mui/icons-material/AddToQueue"
 import { Title, BlockInput, StretchedButton } from "../atoms"
 import { liveMonitorLink } from "../../lib/constants"
 import { GlobalState } from "../../lib/global"
+import { useMonitor } from "../../lib/monitor"
 
 export const HomePage = () => {
   const history = useHistory();
   const [blockNumber, setBlockNumber] = useState("")
+  const { setStartBlockNumber } = useMonitor()
 
   const goToMonitorPage = (blockNumber, history) => {
-    const startBlockNumber = blockNumber ? blockNumber : "current";
-    const url = `${liveMonitorLink}?startBlockNumber=${startBlockNumber}`;
+    setStartBlockNumber(blockNumber || 'current')
   
-    history.push(url);
+    history.push(liveMonitorLink);
   }
 
   useEffect(() => {

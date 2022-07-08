@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from "react"
 import { Grid, Stack, Box } from "@mui/material";
-import { parse } from 'query-string'
 import { Title, Label } from "../atoms"
 import { FungibleTokenRow, BasicModal } from "../molecules";
 import { useNFTHandler } from '../../lib/nftHandler'
 import { useMonitor } from '../../lib/monitor'
 import { GlobalState } from "../../lib/global";
 
-export const LiveMonitorPage = (props) => {
+export const LiveMonitorPage = () => {
   const [openModal, setOpenModal] = useState(false);
   const [selectedNft, setSelectedNft] = useState({});
   const { nfts } = useNFTHandler()
-  const { blockNumber, latestBlockNumber, monitorStopped } = useMonitor()
+  const { startBlockNumber, blockNumber, latestBlockNumber, monitorStopped } = useMonitor()
 
   // Debugging for debugging purposes
   useEffect(() => {
@@ -20,7 +19,6 @@ export const LiveMonitorPage = (props) => {
 
   useEffect(() => {
     const startMonitoring = async () => {
-      const { startBlockNumber } = parse(props.location.search)
       console.log({ startBlockNumber })
       
       await GlobalState.Monitor.start(startBlockNumber)
@@ -33,7 +31,7 @@ export const LiveMonitorPage = (props) => {
     
     startMonitoring()
 
-  }, [props.location.search])
+  }, [startBlockNumber])
 
   const openNftDetail = (nftData) => {
     setSelectedNft(nftData);
