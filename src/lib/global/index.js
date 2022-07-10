@@ -1,2 +1,2 @@
-export { GlobalState, resetStates } from './globalState'
+export { GlobalState, resetNFTState } from './globalState'
 export { Observer } from './observer'

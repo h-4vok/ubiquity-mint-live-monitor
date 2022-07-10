@@ -17,8 +17,6 @@ class NFTHandlerProvider extends React.Component {
       this.#setNFTs
     )
   }
-  
-  resetNFTState = () => this.#setNFTs([])
 
   maxNFTsReached = () => this.state.nfts.length >= process.env.REACT_APP_MAX_NFTS
 
