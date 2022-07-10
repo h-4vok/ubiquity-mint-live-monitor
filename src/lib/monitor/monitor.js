@@ -3,18 +3,15 @@ import { Distiller } from "../distiller"
 import { delay } from '../delay'
 
 export class Monitor {
-    #processing
     #running
     #client
     #distiller
-    #stopMonitor
     #setBlockNumber
     #setLatestBlockNumber
 
-    constructor(apiKey, stopMonitor, setBlockNumber, setLatestBlockNumber) {
+    constructor(apiKey, setBlockNumber, setLatestBlockNumber) {
       this.#client= new UbiquityClient(apiKey)
       this.#distiller = new Distiller()
-      this.#stopMonitor = stopMonitor
       this.#setBlockNumber = setBlockNumber
       this.#setLatestBlockNumber = setLatestBlockNumber
     }
@@ -29,7 +26,6 @@ export class Monitor {
 
       while (latestBlockNumber >= blockNumber && this.isRunning()) {
         console.log(`Monitoring on block number: ${blockNumber}`)
-        this.#processing = true
 
         if (blockNumber === -1) blockNumber = latestBlockNumber
         this.#setBlockNumber(blockNumber)
@@ -49,7 +45,6 @@ export class Monitor {
         blockNumber++
 
         await delay(1000)
-        this.#processing = false
       }
 
       if (!this.isRunning()) {
@@ -59,19 +54,9 @@ export class Monitor {
       setTimeout(async () => await this.start(latestBlockNumber), 1000)
     }
 
-    stop() {
-      console.log(`Monitor ended, max nfts ammount(${process.env.REACT_APP_MAX_NFTS}) has been reached`)
-      this.#running = false
-      this.#stopMonitor()
-    }
-
-    reset() {
-      this.#running = false
-    }
+    stop = () => this.#running = false
 
     isRunning = () => this.#running
-
-    isProcessing = () => this.#processing
 
     async #getLatestBlockNumber() {
       console.log("getLatestBlockNumber")

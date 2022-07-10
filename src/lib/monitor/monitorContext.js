@@ -8,7 +8,6 @@ class MonitorProvider extends React.Component {
     super(props)
     this.state = {
       monitor: null,
-      monitorStopped: false,
       startBlockNumber: -1,
       blockNumber: 0,
       latestBlockNumber: 0
@@ -19,12 +18,13 @@ class MonitorProvider extends React.Component {
     this.setState(() => ({
       monitor: new Monitor(
         process.env.REACT_APP_API_KEY,
-        this.#stopMonitor,
         this.#setBlockNumber,
         this.#setLatestBlockNumber
       )
     }), async () => await this.state.monitor.start(this.state.startBlockNumber))
   }
+
+  stop = () => this.state.monitor.stop()
 
   resetMonitorState = () => {
     this.state.monitor.stop()
@@ -41,12 +41,6 @@ class MonitorProvider extends React.Component {
   setStartBlockNumber = (startBlockNumber) => {
     this.setState(() => ({
       startBlockNumber
-    }))
-  }
-
-  #stopMonitor = () => {
-    this.setState(() => ({
-      monitorStopped: true,
     }))
   }
 
@@ -67,8 +61,9 @@ class MonitorProvider extends React.Component {
       <MonitorContext.Provider
         value={{
           ...this.state,
-          setStartBlockNumber: this.setStartBlockNumber,
           start: this.start,
+          stop: this.stop,
+          setStartBlockNumber: this.setStartBlockNumber,
           resetMonitorState: this.resetMonitorState,
           isRunning: this.isRunning
         }}

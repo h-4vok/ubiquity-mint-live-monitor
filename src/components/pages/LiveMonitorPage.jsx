@@ -8,13 +8,8 @@ import { useMonitor } from '../../lib/monitor'
 export const LiveMonitorPage = () => {
   const [openModal, setOpenModal] = useState(false)
   const [selectedNft, setSelectedNft] = useState({})
-  const { nfts } = useNFTHandler()
-  const { blockNumber, latestBlockNumber, monitorStopped, start } = useMonitor()
-
-  // Debugging for debugging purposes
-  useEffect(() => {
-    console.log({nfts})
-  }, [nfts])
+  const { nfts, maxNFTsReached } = useNFTHandler()
+  const { blockNumber, latestBlockNumber, start, stop } = useMonitor()
 
   useEffect(() => {
     const startMonitoring = async () => {
@@ -23,6 +18,15 @@ export const LiveMonitorPage = () => {
     
     startMonitoring()
   }, [start])
+
+  useEffect(() => {
+    console.log({nfts})
+
+    if (maxNFTsReached()) {
+      console.log(`Monitor has been stopped, max nfts ammount(${process.env.REACT_APP_MAX_NFTS}) reached.`)
+      stop()
+    }
+  }, [nfts, maxNFTsReached, stop])
 
   const openNftDetail = (nftData) => {
     setSelectedNft(nftData);
@@ -43,7 +47,7 @@ export const LiveMonitorPage = () => {
           }
         </Grid>
         {
-          monitorStopped && <Grid item xs={12}><Label>Max nfts reached, monitor has been stopped.</Label></Grid>
+          maxNFTsReached() && <Grid item xs={12}><Label>Monitor has been stopped, max nfts ammount({process.env.REACT_APP_MAX_NFTS}) reached.</Label></Grid>
         }
       </Grid>
       <Stack spacing={2} className="margin-top--20px">

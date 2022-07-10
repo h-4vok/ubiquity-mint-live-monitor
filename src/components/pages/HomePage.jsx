@@ -5,11 +5,13 @@ import AddToQueueIcon from "@mui/icons-material/AddToQueue"
 import { Title, BlockInput, StretchedButton } from "../atoms"
 import { liveMonitorLink } from "../../lib/constants"
 import { useMonitor } from "../../lib/monitor"
+import { useNFTHandler } from "../../lib/nftHandler"
 
 export const HomePage = () => {
   const history = useHistory();
   const [blockNumber, setBlockNumber] = useState("")
   const { setStartBlockNumber, resetMonitorState, isRunning } = useMonitor()
+  const { nfts, resetNFTState } = useNFTHandler()
 
   const goToMonitorPage = async (blockNumber, history) => {
     await setStartBlockNumber(blockNumber || 'current')
@@ -21,7 +23,11 @@ export const HomePage = () => {
     if(isRunning()){
       resetMonitorState()
     }
-  }, [isRunning, resetMonitorState])
+
+    if(nfts.length > 0) {
+      resetNFTState()
+    }
+  }, [isRunning, resetMonitorState, nfts, resetNFTState])
 
   return (
     <Container className="text-align--center">

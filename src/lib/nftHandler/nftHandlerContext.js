@@ -18,6 +18,10 @@ class NFTHandlerProvider extends React.Component {
     )
   }
   
+  resetNFTState = () => this.#setNFTs([])
+
+  maxNFTsReached = () => this.state.nfts.length >= process.env.REACT_APP_MAX_NFTS
+
   #getNFTs = () => _.clone(this.state.nfts, false)
 
   #setNFTs = (nfts) => {
@@ -31,6 +35,8 @@ class NFTHandlerProvider extends React.Component {
       <NFTHandlerContext.Provider
         value={{
           ...this.state,
+          resetNFTState: this.resetNFTState,
+          maxNFTsReached: this.maxNFTsReached
         }}
       >
         {this.props.children}
