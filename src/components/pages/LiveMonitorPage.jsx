@@ -40,15 +40,22 @@ export const LiveMonitorPage = () => {
           <Title variant="h5">Ubiquity Live Mint Monitor</Title>
         </Grid>
         <Grid item xs={12}>
-          {
-            blockNumber && latestBlockNumber ? 
-            <Label>Exploring... ({blockNumber} / {latestBlockNumber})</Label> : 
-            <Label>Monitor is starting...</Label>
-          }
+        <Label>
+            {
+              blockNumber && latestBlockNumber ? 
+              `${maxNFTsReached() ? 'Stopped' : 'Exploring...'} (${blockNumber} / ${latestBlockNumber})` : 
+              'Monitor is starting...'
+            }
+          </Label>
         </Grid>
-        {
-          maxNFTsReached() && <Grid item xs={12}><Label>Monitor has been stopped, max nfts ammount({process.env.REACT_APP_MAX_NFTS}) reached.</Label></Grid>
-        }
+        <Grid item xs={12}>
+          <Label>
+            {
+              maxNFTsReached() ? `Monitor has been stopped, max nfts ammount(${process.env.REACT_APP_MAX_NFTS}) reached.` :
+              `NFTs found: ${nfts.length} / ${process.env.REACT_APP_MAX_NFTS}`
+            }
+          </Label>
+        </Grid>
       </Grid>
       <Stack spacing={2} className="margin-top--20px">
         {

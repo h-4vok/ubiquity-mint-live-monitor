@@ -30,7 +30,6 @@ class MonitorProvider extends React.Component {
     this.state.monitor.stop()
     this.setState(() => ({
       monitor: null,
-      monitorStopped: false,
       blockNumber: 0,
       latestBlockNumber: 0
     }))
