@@ -5,7 +5,7 @@ import { NFTHandlerContext } from './nftHandlerContext';
 export const withNFTHandler = (Component) => {
   const WrappedComponent = React.forwardRef((props, ref) => (
     <NFTHandlerContext.Consumer>
-      {(context) => <Component {...props} ref={ref} context={context} />}
+      {(nftHandlerContext) => <Component {...props} ref={ref} nftHandlerContext={nftHandlerContext} />}
     </NFTHandlerContext.Consumer>
   ))
 

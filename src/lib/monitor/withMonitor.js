@@ -1,12 +1,12 @@
 import React from 'react';
 import hoistNonReactStatics from 'hoist-non-react-statics';
-import { NFTHandlerContext } from './nftHandlerContext';
+import { MonitorContext } from './monitorContext';
 
-export const withNFTHandler = (Component) => {
+export const withMonitor = (Component) => {
   const WrappedComponent = React.forwardRef((props, ref) => (
-    <NFTHandlerContext.Consumer>
-      {(context) => <Component {...props} ref={ref} context={context} />}
-    </NFTHandlerContext.Consumer>
+    <MonitorContext.Consumer>
+      {(monitorContext) => <Component {...props} ref={ref} monitorContext={monitorContext} />}
+    </MonitorContext.Consumer>
   ))
 
   hoistNonReactStatics(WrappedComponent, Component);

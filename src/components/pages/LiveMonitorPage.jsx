@@ -4,29 +4,29 @@ import { Title, Label } from "../atoms"
 import { FungibleTokenRow, BasicModal } from "../molecules";
 import { useNFTHandler } from '../../lib/nftHandler'
 import { useMonitor } from '../../lib/monitor'
-import { GlobalState } from "../../lib/global"
 
 export const LiveMonitorPage = () => {
   const [openModal, setOpenModal] = useState(false)
   const [selectedNft, setSelectedNft] = useState({})
-  const { nfts } = useNFTHandler()
-  const { startBlockNumber, blockNumber, latestBlockNumber, monitorStopped } = useMonitor()
-
-  // Debugging for debugging purposes
-  useEffect(() => {
-    console.log({nfts})
-  }, [nfts])
+  const { nfts, maxNFTsReached } = useNFTHandler()
+  const { blockNumber, latestBlockNumber, start, stop } = useMonitor()
 
   useEffect(() => {
     const startMonitoring = async () => {
-      console.log({ startBlockNumber })
-
-      await GlobalState.Monitor.start(startBlockNumber)
+      await start()
     }
     
     startMonitoring()
+  }, [start])
 
-  }, [startBlockNumber])
+  useEffect(() => {
+    console.log({nfts})
+
+    if (maxNFTsReached()) {
+      console.log(`Monitor has been stopped, max nfts ammount(${process.env.REACT_APP_MAX_NFTS}) reached.`)
+      stop()
+    }
+  }, [nfts, maxNFTsReached, stop])
 
   const openNftDetail = (nftData) => {
     setSelectedNft(nftData);
@@ -40,15 +40,22 @@ export const LiveMonitorPage = () => {
           <Title variant="h5">Ubiquity Live Mint Monitor</Title>
         </Grid>
         <Grid item xs={12}>
-          {
-            blockNumber && latestBlockNumber ? 
-            <Label>Exploring... ({blockNumber} / {latestBlockNumber})</Label> : 
-            <Label>Monitor is starting...</Label>
-          }
+        <Label>
+            {
+              blockNumber && latestBlockNumber ? 
+              `${maxNFTsReached() ? 'Stopped' : 'Exploring...'} (${blockNumber} / ${latestBlockNumber})` : 
+              'Monitor is starting...'
+            }
+          </Label>
         </Grid>
-        {
-          monitorStopped && <Grid item xs={12}><Label>Max nfts reached, monitor has been stopped.</Label></Grid>
-        }
+        <Grid item xs={12}>
+          <Label>
+            {
+              maxNFTsReached() ? `Monitor has been stopped, max nfts ammount(${process.env.REACT_APP_MAX_NFTS}) reached.` :
+              `NFTs found: ${nfts.length} / ${process.env.REACT_APP_MAX_NFTS}`
+            }
+          </Label>
+        </Grid>
       </Grid>
       <Stack spacing={2} className="margin-top--20px">
         {
