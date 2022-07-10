@@ -10,15 +10,13 @@ export class Monitor {
     #stopMonitor
     #setBlockNumber
     #setLatestBlockNumber
-    #resetMonitorState
 
-    constructor(apiKey, stopMonitor, setBlockNumber, setLatestBlockNumber, resetMonitorState) {
+    constructor(apiKey, stopMonitor, setBlockNumber, setLatestBlockNumber) {
       this.#client= new UbiquityClient(apiKey)
       this.#distiller = new Distiller()
       this.#stopMonitor = stopMonitor
       this.#setBlockNumber = setBlockNumber
       this.#setLatestBlockNumber = setLatestBlockNumber
-      this.#resetMonitorState = resetMonitorState
     }
 
     async start(startBlockNumber) {
@@ -69,7 +67,6 @@ export class Monitor {
 
     reset() {
       this.#running = false
-      this.#resetMonitorState()
     }
 
     isRunning = () => this.#running

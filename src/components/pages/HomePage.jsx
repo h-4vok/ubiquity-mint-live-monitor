@@ -1,23 +1,27 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { useHistory } from "react-router-dom"
 import { Container, Box, Grid } from "@mui/material"
 import AddToQueueIcon from "@mui/icons-material/AddToQueue"
 import { Title, BlockInput, StretchedButton } from "../atoms"
 import { liveMonitorLink } from "../../lib/constants"
-import { resetStates } from "../../lib/global"
 import { useMonitor } from "../../lib/monitor"
 
 export const HomePage = () => {
   const history = useHistory();
   const [blockNumber, setBlockNumber] = useState("")
-  const { setStartBlockNumber } = useMonitor()
+  const { setStartBlockNumber, resetMonitorState, isRunning } = useMonitor()
 
   const goToMonitorPage = async (blockNumber, history) => {
     await setStartBlockNumber(blockNumber || 'current')
-    await resetStates()
 
     history.push(liveMonitorLink)
   }
+
+  useEffect(() => {
+    if(isRunning()){
+      resetMonitorState()
+    }
+  }, [isRunning, resetMonitorState])
 
   return (
     <Container className="text-align--center">

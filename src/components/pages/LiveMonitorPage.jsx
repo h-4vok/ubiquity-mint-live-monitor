@@ -4,13 +4,12 @@ import { Title, Label } from "../atoms"
 import { FungibleTokenRow, BasicModal } from "../molecules";
 import { useNFTHandler } from '../../lib/nftHandler'
 import { useMonitor } from '../../lib/monitor'
-import { GlobalState } from "../../lib/global"
 
 export const LiveMonitorPage = () => {
   const [openModal, setOpenModal] = useState(false)
   const [selectedNft, setSelectedNft] = useState({})
   const { nfts } = useNFTHandler()
-  const { startBlockNumber, blockNumber, latestBlockNumber, monitorStopped } = useMonitor()
+  const { blockNumber, latestBlockNumber, monitorStopped, start } = useMonitor()
 
   // Debugging for debugging purposes
   useEffect(() => {
@@ -19,14 +18,11 @@ export const LiveMonitorPage = () => {
 
   useEffect(() => {
     const startMonitoring = async () => {
-      console.log({ startBlockNumber })
-
-      await GlobalState.Monitor.start(startBlockNumber)
+      await start()
     }
     
     startMonitoring()
-
-  }, [startBlockNumber])
+  }, [start])
 
   const openNftDetail = (nftData) => {
     setSelectedNft(nftData);
