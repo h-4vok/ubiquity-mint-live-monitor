@@ -10,7 +10,7 @@ import { resetNFTState } from '../../lib/global'
 export const HomePage = () => {
   const history = useHistory();
   const [blockNumber, setBlockNumber] = useState("")
-  const { setStartBlockNumber, resetMonitorState, isRunning } = useMonitor()
+  const { monitor, setStartBlockNumber, resetMonitorState } = useMonitor()
 
   const goToMonitorPage = async (blockNumber, history) => {
     await setStartBlockNumber(blockNumber || 'current')
@@ -19,12 +19,12 @@ export const HomePage = () => {
   }
 
   useEffect(() => {
-    if(isRunning()){
+    if (monitor) {
       resetMonitorState()
     }
 
     resetNFTState()
-  }, [isRunning, resetMonitorState])
+  }, [monitor, resetMonitorState])
 
   return (
     <Container className="text-align--center">
