@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
-import { Grid, Stack, Box } from "@mui/material";
+import { Grid, Stack, Box } from "@mui/material"
 import { Title, Label } from "../atoms"
-import { FungibleTokenRow, BasicModal } from "../molecules";
+import { FungibleTokenRow, BasicModal } from "../molecules"
 import { useNFTHandler } from '../../lib/nftHandler'
 import { useMonitor } from '../../lib/monitor'
 
