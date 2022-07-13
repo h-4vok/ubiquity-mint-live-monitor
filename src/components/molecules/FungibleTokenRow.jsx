@@ -1,5 +1,7 @@
 import { Paper, Stack, Container } from "@mui/material"
 import { FungibleTokenThumbnail, Label, ShareTwitterButton } from "../atoms"
+import { lineBreakCode } from "../../lib/constants"
+const { encode } = require('url-encode-decode')
 
 export const FungibleTokenRow = (props) => (
   <div>
@@ -15,9 +17,9 @@ export const FungibleTokenRow = (props) => (
       </Stack>
     </Paper>
     <ShareTwitterButton
-      text={`Take a look at this awesome NFT! ${props.nft.name} ${props.nft.symbol}`}
+      text={`Take a look at this awesome NFT!${lineBreakCode}${encode(props.nft.name)}${lineBreakCode}${encode(props.nft.symbol)}${lineBreakCode}Seller fee: ${props.nft.seller_fee_basis_points}${lineBreakCode}${encode(props.nft.image)}${lineBreakCode}`}
       url={props.nft.external_url}
-      hashtags="SolanaNFT,NFT" />
+      hashtags="SolanaNFT, NFT" />
   </div>
 );
 
