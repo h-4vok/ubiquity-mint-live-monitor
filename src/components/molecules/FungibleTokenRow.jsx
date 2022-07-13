@@ -19,7 +19,7 @@ export const FungibleTokenRow = (props) => (
     <ShareTwitterButton
       text={`Take a look at this awesome NFT!${lineBreakCode}${encode(props.nft.name)}${lineBreakCode}${encode(props.nft.symbol)}${lineBreakCode}Seller fee: ${props.nft.seller_fee_basis_points}${lineBreakCode}${encode(props.nft.image)}${lineBreakCode}`}
       url={props.nft.external_url}
-      hashtags="SolanaNFT, NFT" />
+      hashtags="SolanaNFT, NFT, UbiquityAPI, UbiquityHackaton23" />
   </div>
 );
 
