@@ -1,9 +1,12 @@
-import { Paper, Stack, Container } from "@mui/material";
-import { FungibleTokenThumbnail, Label } from "../atoms";
+import { Paper, Stack, Container } from "@mui/material"
+import { FungibleTokenThumbnail, Label, ShareTwitterButton } from "../atoms"
+import { lineBreakCode } from "../../lib/constants"
+const { encode } = require('url-encode-decode')
 
 export const FungibleTokenRow = (props) => (
-  <div onClick={() => goToNftDetail(props.nft, props.onOpenNftDetail)}>
-    <Paper className="padding--40px hover-animation">
+  <div>
+    <Paper className="padding--40px hover-animation"
+      onClick={() => goToNftDetail(props.nft, props.onOpenNftDetail)}>
       <Stack direction="row" spacing={2}>
         <FungibleTokenThumbnail imageSrc={props.nft.image} />
         <Container className="text-align--left">
@@ -13,6 +16,10 @@ export const FungibleTokenRow = (props) => (
         </Container>
       </Stack>
     </Paper>
+    <ShareTwitterButton
+      text={`Take a look at this awesome NFT!${lineBreakCode}${encode(props.nft.name)}${lineBreakCode}${encode(props.nft.symbol)}${lineBreakCode}Seller fee: ${props.nft.seller_fee_basis_points}${lineBreakCode}${encode(props.nft.image)}${lineBreakCode}`}
+      url={props.nft.external_url}
+      hashtags="SolanaNFT, NFT" />
   </div>
 );
 

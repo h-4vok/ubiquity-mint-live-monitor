@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Grid, Paper, Modal, Link } from "@mui/material";
 import { Label } from "../atoms";
+import { solscanUrl } from "../../lib/constants"
 
 const containerStyle = {
   position: "absolute",
@@ -37,7 +38,15 @@ export function BasicModal({ open, setOpen, nftData }) {
             </div>
           </Grid>
           <Grid item xs={12}>
-            <Label variant="h6">{nftData.name}</Label>
+            <Label variant="h6">
+              <Link
+                href={`${solscanUrl}${nftData.address}`}
+                target="_blank"
+                underline="none"
+              >
+                {nftData.name}
+              </Link>
+            </Label>
           </Grid>
           <Grid item xs={12}>
             <Link href={nftData.external_url} target="_blank">

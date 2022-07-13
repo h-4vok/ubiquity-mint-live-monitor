@@ -22,7 +22,7 @@ export class NftDiscovery {
             const { data } = await axios.get(metadataUri);
             console.log({data});
 
-            GlobalState.Observer.emitNFTEvent(data);
+            GlobalState.Observer.emitNFTEvent({...data, address: nftData.data.data.account});
         } catch (e) {
           console.error({ e })
         }
