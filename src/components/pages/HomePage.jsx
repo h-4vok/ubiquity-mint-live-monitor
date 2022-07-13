@@ -1,38 +1,35 @@
-import React, { useState, useEffect } from "react"
-import { useHistory } from "react-router-dom"
-import { Container, Box, Grid } from "@mui/material"
-import AddToQueueIcon from "@mui/icons-material/AddToQueue"
-import { Title, BlockInput, StretchedButton } from "../atoms"
-import { liveMonitorLink } from "../../lib/constants"
-import { useMonitor } from "../../lib/monitor"
-import { resetNFTState } from '../../lib/global'
+import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
+import { Container, Box, Grid } from "@mui/material";
+import AddToQueueIcon from "@mui/icons-material/AddToQueue";
+import { Title, BlockInput, StretchedButton } from "../atoms";
+import { liveMonitorLink } from "../../lib/constants";
+import { useMonitor } from "../../lib/monitor";
+import { resetNFTState } from "../../lib/global";
 
 export const HomePage = () => {
   const history = useHistory();
-  const [blockNumber, setBlockNumber] = useState("")
-  const { monitor, setStartBlockNumber, resetMonitorState } = useMonitor()
+  const [blockNumber, setBlockNumber] = useState("119798911");
+  const { monitor, setStartBlockNumber, resetMonitorState } = useMonitor();
 
   const goToMonitorPage = async (blockNumber, history) => {
-    await setStartBlockNumber(blockNumber || 'current')
+    await setStartBlockNumber(blockNumber || "current");
 
-    history.push(liveMonitorLink)
-  }
+    history.push(liveMonitorLink);
+  };
 
   useEffect(() => {
     if (monitor) {
-      resetMonitorState()
+      resetMonitorState();
     }
 
-    resetNFTState()
-  }, [monitor, resetMonitorState])
+    resetNFTState();
+  }, [monitor, resetMonitorState]);
 
   return (
     <Container className="text-align--center">
       <Title>Ubiquity</Title>
       <Title>Live Mint Monitor</Title>
-      <Title variant="h6">
-        Monitor all NFT mints in the Solana blockchain
-      </Title>
 
       <Box className="box">
         <Grid container spacing={3}>
@@ -54,6 +51,8 @@ export const HomePage = () => {
           </Grid>
         </Grid>
       </Box>
+      <Title variant="h6">&nbsp;</Title>
+      <Title variant="h6">Monitor all NFT mints in the Solana blockchain</Title>
     </Container>
   );
 };

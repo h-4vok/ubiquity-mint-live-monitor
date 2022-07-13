@@ -20,8 +20,6 @@ export const LiveMonitorPage = () => {
   }, [start])
 
   useEffect(() => {
-    console.log({nfts})
-
     if (maxNFTsReached()) {
       console.log(`Monitor has been stopped, max nfts ammount(${process.env.REACT_APP_MAX_NFTS}) reached.`)
       stop()
@@ -43,7 +41,7 @@ export const LiveMonitorPage = () => {
         <Label>
             {
               blockNumber && latestBlockNumber ? 
-              `${maxNFTsReached() ? 'Stopped' : 'Exploring...'} (${blockNumber} / ${latestBlockNumber})` : 
+              `${maxNFTsReached() ? 'Stopped' : 'Exploring blocks...'} (${blockNumber} / ${latestBlockNumber})` : 
               'Monitor is starting...'
             }
           </Label>
