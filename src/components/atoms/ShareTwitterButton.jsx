@@ -14,6 +14,6 @@ export const ShareTwitterButton = (props) => (
         hashtags: props.hashtags
     })}
   >
-    SHARE!
+    Share on Twitter!
   </Button>
 );
