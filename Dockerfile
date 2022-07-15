@@ -1,10 +1,11 @@
 FROM node:14.18.0-alpine AS builder
 WORKDIR /src
-COPY /build_npmrc.sh .
+RUN echo "@ubiquity:registry=https://gitlab.com/api/v4/projects/27274533/packages/npm/">>.npmrc
+RUN echo "//gitlab.com/api/v4/projects/27274533/packages/npm/API_KEY=$API_KEY">>.npmrc
+RUN echo "always-auth=true">>.npmrc
 COPY /.env .
 COPY /package.json .
 COPY /package-lock.json .
-RUN ./build_npmrc.sh
 RUN npm install
 COPY /public/ ./public
 COPY /src/ ./src
