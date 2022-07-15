@@ -9,7 +9,7 @@ import { resetNFTState } from "../../lib/global";
 
 export const HomePage = () => {
   const history = useHistory();
-  const [blockNumber, setBlockNumber] = useState("119798911");
+  const [blockNumber, setBlockNumber] = useState("");
   const { monitor, setStartBlockNumber, resetMonitorState } = useMonitor();
 
   const goToMonitorPage = async (blockNumber, history) => {
