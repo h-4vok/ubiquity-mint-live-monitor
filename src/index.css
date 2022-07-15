@@ -1,6 +1,13 @@
 :root {
   --heading-font: "Inter", sans-serif;
   --body-font: "Kanit", sans-serif;
+
+  --background-color-content: rgb(0, 19, 33, 0.8);
+  --background-color: rgb(0, 19, 33);
+  --border-color: rgb(19, 55, 82);
+  --action-color: rgb(0, 227, 180);
+  --heading-text-color: rgb(255, 255, 255);
+  --body-text-color: ghostwhite;
 }
 
 body {
@@ -109,3 +116,40 @@ iframe {
   transition: box-shadow 0s;
 }
 
+.cursor--pointer {
+  cursor: pointer;
+}
+
+.nft-row {
+  background-color: var(--background-color) !important;
+}
+
+.MuiButton-root {
+  background-color: var(--action-color) !important;
+}
+
+.MuiButton-root:hover {
+  background-color: var(--border-color) !important;
+}
+
+.nft-show {
+  background-color: var(--background-color) !important;
+}
+
+.nft-show-table {
+  border: 1px solid var(--border-color) !important;
+}
+
+.border-bottom--border-color {
+  border-bottom: 1px solid var(--border-color) !important;
+}
+
+.text-overflow--ellipsis {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.content-text {
+  font-family: var(--body-font);
+}

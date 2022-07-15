@@ -1,23 +1,32 @@
-import { Paper, Stack, Container } from "@mui/material"
-import { FungibleTokenThumbnail, Label, ShareTwitterButton } from "../atoms"
-import { lineBreakCode } from "../../lib/constants"
-const { encode } = require('url-encode-decode')
+import { Paper, Stack, Grid } from "@mui/material";
+import { FungibleTokenThumbnail, Label, ShareTwitterButton } from "../atoms";
+import { lineBreakCode, solscanUrl } from "../../lib/constants";
+import { formatRoyalties } from "../../lib/formatting/numberFormat";
+const { encode } = require("url-encode-decode");
 
 export const FungibleTokenRow = (props) => (
   <div>
-    <Paper className="padding--40px hover-animation"
-      onClick={() => goToNftDetail(props.nft, props.onOpenNftDetail)}>
+    <Paper
+      className="padding--40px hover-animation cursor--pointer nft-row"
+      onClick={() => goToNftDetail(props.nft, props.onOpenNftDetail)}
+    >
       <Stack direction="row" spacing={2}>
         <FungibleTokenThumbnail imageSrc={props.nft.image} />
-        <Container className="text-align--left">
-          <Label variant="h4">{props.nft.name}</Label>
-          <Label variant="h5">{props.nft.symbol}</Label>
-          <Label variant="p">{props.nft.description}</Label>
-        </Container>
+        <Grid container className="text-align--left">
+          <Grid item xs={12} sm={6}>
+            <Label variant="h4">{props.nft.name}</Label>
+            <Label variant="h5">{props.nft.symbol}</Label>
+            <Label variant="span">{props.nft.description}</Label>
+          </Grid>
+        </Grid>
       </Stack>
     </Paper>
     <ShareTwitterButton
-      text={`Take a look at this awesome NFT!${lineBreakCode}${encode(props.nft.name)}${lineBreakCode}${encode(props.nft.symbol)}${lineBreakCode}Seller fee: ${props.nft.seller_fee_basis_points}${lineBreakCode}${encode(props.nft.image)}${lineBreakCode}`}
+      text={`Take a look at this awesome NFT!${lineBreakCode}${encode(
+        props.nft.name
+      )}${lineBreakCode}${lineBreakCode}Royalties: ${encode(
+        `${formatRoyalties(props.nft.seller_fee_basis_points)}%`
+      )}${lineBreakCode}${encode(`${solscanUrl}${props.nft.address}`)}${lineBreakCode}`}
       url={props.nft.external_url}
       hashtags="SolanaNFT, NFT, UbiquityAPI, UbiquityHackaton23" />
   </div>
