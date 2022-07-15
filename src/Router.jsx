@@ -3,12 +3,11 @@ import { Route, Switch, HashRouter } from "react-router-dom";
 import { HomePage, LiveMonitorPage } from "./components/pages";
 import NotFound from "./components/pages/Errors/404";
 import { homeLink, liveMonitorLink } from "./lib/constants";
-import { createTheme, ThemeProvider, CssBaseline } from "@material-ui/core";
+import { createTheme, ThemeProvider } from "@material-ui/core";
 
 const darkTheme = createTheme({
   palette: {
     mode: "light",
-    
   },
 });
 
