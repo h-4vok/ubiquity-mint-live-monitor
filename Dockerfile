@@ -1,5 +1,6 @@
 FROM node:14.18.0-alpine AS builder
 WORKDIR /src
+ARG API_KEY
 RUN echo "@ubiquity:registry=https://gitlab.com/api/v4/projects/27274533/packages/npm/">>.npmrc
 RUN echo "//gitlab.com/api/v4/projects/27274533/packages/npm/API_KEY=$API_KEY">>.npmrc
 RUN echo "always-auth=true">>.npmrc

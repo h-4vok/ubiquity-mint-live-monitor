@@ -6,7 +6,7 @@ services:
         tty: true
         build:
             context: .
-        env_file:
-            - .env
+        environment:
+        - API_KEY=${API_KEY}
         ports:
             - "3000:3000"
