@@ -4,10 +4,13 @@ import { Label, ShareTwitterButton } from "../atoms";
 import { solscanUrl, solscanLinkToAccount, lineBreakCode } from "../../lib/constants";
 import { formatRoyalties } from "../../lib/formatting/numberFormat";
 const { encode } = require("url-encode-decode");
+const modalStyle = {
+  overflow:'scroll',
+};
 
 const containerStyle = {
-  position: "absolute",
-  top: "50%",
+  position: "relative",
+  top: "60%",
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: "70%",
@@ -16,6 +19,7 @@ const containerStyle = {
   "box-shadow": "none !important",
   "-webkit-transition": "none !important",
   transition: "none !important",
+  height: 'auto'
 };
 
 export function BasicModal({ open, setOpen, nftData }) {
@@ -28,6 +32,7 @@ export function BasicModal({ open, setOpen, nftData }) {
       onClose={handleClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
+      sx={modalStyle}
     >
       <Paper sx={containerStyle} elevation={4} className="nft-show">
         <Grid container className="text-align--center">

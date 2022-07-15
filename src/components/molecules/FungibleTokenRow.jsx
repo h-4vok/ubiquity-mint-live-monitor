@@ -1,4 +1,4 @@
-import { Paper, Stack, Grid, Container } from "@mui/material";
+import { Paper, Stack, Grid } from "@mui/material";
 import { FungibleTokenThumbnail, Label, ShareTwitterButton } from "../atoms";
 import { lineBreakCode, solscanUrl } from "../../lib/constants";
 import { formatRoyalties } from "../../lib/formatting/numberFormat";
