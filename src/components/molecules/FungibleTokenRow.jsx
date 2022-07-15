@@ -28,8 +28,7 @@ export const FungibleTokenRow = (props) => (
         `${formatRoyalties(props.nft.seller_fee_basis_points)}%`
       )}${lineBreakCode}${encode(`${solscanUrl}${props.nft.address}`)}${lineBreakCode}`}
       url={props.nft.external_url}
-      hashtags="SolanaNFT, NFT, UbiquityAPI, UbiquityHackathon23"
-    />
+      hashtags="SolanaNFT, NFT, UbiquityAPI, UbiquityHackaton23" />
   </div>
 );
 
