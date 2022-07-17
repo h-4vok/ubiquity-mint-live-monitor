@@ -1,11 +1,12 @@
 # Ubiquity Mint Live Monitor - Proof of Concept
 
 Link to deployed demo: https://ubiquity-mint-monitor-poc.netlify.app/
+
 - Check last section for a guide on testing
 
-We are always looking for ways to produce innovative tools for the NFT space in the Solanas blockchain, and we have been researching ERC20 blockchains for a while. We have been planning to build a cross-chain NFT monitor and fraud analyzer that would not require you to connect your wallet.
+We are always looking for ways to produce innovative tools for the NFT space in the Solana blockchain, and we have been researching ERC20 blockchains for a while. We have been planning to build a cross-chain NFT monitor and fraud analyzer that would not require you to connect your wallet.
 
-Ubiquity API has now appeared. It's functionality support is still under development, especially for Solanas, so we depend on other third party APIs until Ubiquity API can expand its support. However, this prototype of our platform idea is a good first example to show how easy it would be to use Ubiquity API in conjunction to other market APIs to build very fast, concrete and reliable solutions for the NFT space.
+Ubiquity API has now appeared. It's functionality support is still under development, especially for Solana, so we depend on other third party APIs until Ubiquity API can expand its support. However, this prototype of our platform idea is a good first example to show how easy it would be to use Ubiquity API in conjunction to other market APIs to build very fast, concrete and reliable solutions for the NFT space.
 
 # Hackathon participants
 
@@ -36,20 +37,20 @@ Our team is also comprised of 4 additional developers, 2 marketing associates, 2
 
 # Technologies used
 
-We developed by PoC for Solanas where we have the most experience. We used the following technologies.
+We developed by PoC for Solana where we have the most experience. We used the following technologies.
 
 ## List of technologies
 
 ### Frontend
 
-* ReactJS
-* Material UI
-* Axios
+- ReactJS
+- Material UI
+- Axios
 
 ### APIs
 
-* Ubiquity API for Solanas
-* Solscan API
+- Ubiquity API for Solana
+- Solscan API
 
 ## How is technology used
 
@@ -59,12 +60,13 @@ ReactJS is obviously the underlaying library supporting all the rendering and in
 
 But this project would not be complete without interacting with the APIs. For Ubiquity API we are using the official @ubiquity/ubiquity-ts-client library from the official ubiquity npm registry (you will need to build the .npmrc file for this to work locally).
 
-We are using AXIOS to interact with the Solscan API in order to obtain the owner of an NFT, the metadata and the image. This could be easily achieved with Ubiquity API but the NFT APIs currently are not supporting Solanas.
+We are using AXIOS to interact with the Solscan API in order to obtain the owner of an NFT, the metadata and the image. This could be easily achieved with Ubiquity API but the NFT APIs currently are not supporting Solana.
 
 ## Specific places where @ubiquity/ubiquity-ts-client is used
 
 Please head to the monitor.js file under src/lib/monitor
-- Line 65 - Where we use Ubiquity API to understand which is the latest block number in the solanas blockchain
+
+- Line 65 - Where we use Ubiquity API to understand which is the latest block number in the solana blockchain
 - Line 80 - Most importantly, we use the Ubiquity API to obtain all the transactions within a specific block number
 
 ## How our application works and leverages Ubiquity API
@@ -77,7 +79,7 @@ Here our live monitor starts and an algorithm can be observed in line 19 of the 
 
 Once the data is obtained, we send the block to the Distiller which is in the distiller.js file under src/lib.
 
-Distiller loops quickly through the data and analyzes its contents. This is a very short and simple version of what the distiller would be, but it is good enough for the prototype. In this particular case we have identified a pattern where all NFT mints in Solanas have exactly 6 events and the type of the second event is "create_account". When a transaction fulfills this criteria it does not immediatelly mean that this is an NFT mint, but all NFT mints have to succeed this criteria. All transactions like this are marked as transaction candidates and sent over to the NftDiscovery.
+Distiller loops quickly through the data and analyzes its contents. This is a very short and simple version of what the distiller would be, but it is good enough for the prototype. In this particular case we have identified a pattern where all NFT mints in Solana have exactly 6 events and the type of the second event is "create_account". When a transaction fulfills this criteria it does not immediatelly mean that this is an NFT mint, but all NFT mints have to succeed this criteria. All transactions like this are marked as transaction candidates and sent over to the NftDiscovery.
 
 NftDiscovery is in nftDiscovery.js under src/lib. This object receives these transaction candidates and now, having a reduced subset of the block's transactions, it uses the Solscan API to retrieve this element as if it were an NFT. To do this, we have identified that the NFT token address is in the destination field of the second even of the transaction (which is, if you remember, the "create_account" event).
 
@@ -99,9 +101,9 @@ This was a quick prototype so please do not expect the best practices, nor SOLID
 
 As we have mentioned in other sections, a real life application would require better attention to detail.
 
-# This is not Solanas exclusive
+# This is not Solana exclusive
 
-Our algorithm and design patterns using the Monitor, Distiller, NftDiscovery, Observer and NFTHandler are quite generic. We would need to build an abstract family interface of these and then potentially have specific implementations for ERC20 compatible blockchains, Solanas and NEAR, which are all of the important players in the NFT space.
+Our algorithm and design patterns using the Monitor, Distiller, NftDiscovery, Observer and NFTHandler are quite generic. We would need to build an abstract family interface of these and then potentially have specific implementations for ERC20 compatible blockchains, Solana and NEAR, which are all of the important players in the NFT space.
 
 While implementation will change between blockchains, the algorithm is likely to stay untouched. Potentially classes like Monitor, Observer and NFTHandler will be the same. We would also have to build our own data model for representing NFTs as every blockchain has a different way of structuring this data. This is something the users and the UI should not care about.
 
@@ -120,7 +122,7 @@ Please go to https://ubiquity-mint-monitor-poc.netlify.app/ for a deployed versi
 
 ## Home page
 
-In the home page you will be asked to type the block number you wish to start monitoring from. *This is not something the real users would be doing* but it is a way for us to have a quick testing scenario. Real users would be accesing our data live without the need to worry about block numbers or other blockchain intrisicancies.
+In the home page you will be asked to type the block number you wish to start monitoring from. _This is not something the real users would be doing_ but it is a way for us to have a quick testing scenario. Real users would be accesing our data live without the need to worry about block numbers or other blockchain intrisicancies.
 
 We recommend using the block numbers we have quoted above which have been very active. However, you are welcome to try not typing anything which will start monitoring the blockchain at the current moment.
 
